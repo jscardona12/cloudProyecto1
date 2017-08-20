@@ -1,0 +1,40 @@
+{
+  "name": "proyectocloud-front",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.15.3",
+    "babel-runtime": "^6.20.0",
+    "css-loader": "^0.28.1",
+    "dropbox": "^2.5.3",
+    "fs": "0.0.1-security",
+    "indexof": "0.0.1",
+    "meteor-node-stubs": "~0.2.4",
+    "prop-types": "^15.5.10",
+    "rc-slider": "^7.0.8",
+    "react": "^15.5.4",
+    "react-bootstrap-sweetalert": "^3.0.0",
+    "react-country-select": "^1.0.5",
+    "react-dom": "^15.5.4",
+    "react-modal": "^1.7.7",
+    "react-mounter": "^1.2.0",
+    "react-native-fetch-blob": "^0.10.5",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.11",
+    "react-select": "^1.0.0-rc.4",
+    "style-loader": "^0.17.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.5.5"
+  }
+}
