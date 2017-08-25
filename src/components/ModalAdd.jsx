@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import ListaConcursos from "./ListaConcursos";
 const customStyles = {
     content: {
         top: '50%',
@@ -26,10 +28,10 @@ export default class ModalAdd extends Component {
             modalIsOpen: false,
             name: '',
             description: '',
-            city: '',
-            country: '',
-            pay: '',
-            currency: '',
+            fechaInicio:'',
+            fechaFin:'',
+            image:'',
+            url:'',
 
         };
 
@@ -45,8 +47,18 @@ export default class ModalAdd extends Component {
     }
 
     insertarConcurso() {
+        var con ={
+            nombre:this.state.name,
+            imagen:'./Rostro.PNG',
+            url:this.state.url,
+            fechaInicio:this.state.fechaInicio,
+            fechaFin:this.state.fechaFin,
+            descripcion:this.state.description
+        };
+        this.props.addConcurso(con);
         this.closeModal();
     }
+
     render() {
         // Just render a placeholder container that will be filled in
         return (
@@ -63,13 +75,48 @@ export default class ModalAdd extends Component {
                             <div className="text-center">
                                 <h3>Añadir Concurso</h3>
                             </div>
-                            <h5> Name </h5>
+                            <h5> Nombre </h5>
                             <div>
-                                <input id="sinput" type="text" value={this.state.name} placeholder="Name" required
+                                <input id="sinput" type="text" value={this.state.name} placeholder="Nombre" required
                                        onChange={(event) => {
                                            this.setState({name: event.target.value})
                                        }}/>
                             </div>
+                            <h5> Imagen </h5>
+                            <div>
+
+                                <input id="file-upload" type="file" value={this.state.image}
+                                       placeholder="Seleccione la imagen"
+                                       onChange={(event) => {
+                                        this.setState({image: event.target.value})
+                                }}/>
+                            </div>
+                            <h5> URL </h5>
+                            <div>
+                                <input id="sinput" type="text" value={this.state.url}
+                                       placeholder="URL"
+                                       required onChange={(event) => {
+                                    this.setState({url: event.target.value})
+                                }}/>
+                            </div>
+
+                            <h5> Fecha Inicio(DD/MM/YYYY o N/A) </h5>
+                            <div>
+                                <input id="sinput" type="text" value={this.state.fechaInicio}
+                                       placeholder="Fecha Inicio" required
+                                       onChange={(event) => {
+                                           this.setState({fechaInicio: event.target.value})
+                                       }}/>
+                            </div>
+                            <h5> Fecha Fin(DD/MM/YYYY o N/A) </h5>
+                            <div>
+                                <input id="sinput" type="text" value={this.state.fechaFin}
+                                       placeholder="Fecha Fin" required
+                                       onChange={(event) => {
+                                           this.setState({fechaFin: event.target.value})
+                                       }}/>
+                            </div>
+
                             <h5> Description </h5>
                             <div>
                             <textarea id="sinput" type="text" value={this.state.description} placeholder="Description"
@@ -77,34 +124,8 @@ export default class ModalAdd extends Component {
                                 this.setState({description: event.target.value})
                             }}></textarea>
                             </div>
-                            <h5> Country </h5>
-                            <div>
 
-                            </div>
-                            <h5> City </h5>
-                            <div>
-                                <input id="sinput" type="text" value={this.state.city}
-                                       placeholder="City"
-                                       required onChange={(event) => {
-                                    this.setState({city: event.target.value})
-                                }}/>
-                            </div>
-                            <h5> Pay </h5>
-                            <div>
-                                <input id="sinput" type="number" value={this.state.pay}
-                                       placeholder="Pay"
-                                       required onChange={(event) => {
-                                    this.setState({pay: event.target.value})
-                                }}/>
-                            </div>
-                            <h5> Currency </h5>
-                            <div>
-                                <input id="sinput" type="text" value={this.state.currency}
-                                       placeholder="Currency"
-                                       required onChange={(event) => {
-                                    this.setState({currency: event.target.value})
-                                }}/>
-                            </div>
+
 
                             <div className="row" id="registerButtons">
                                 <div className="col-md-6 text-center">
@@ -125,3 +146,4 @@ export default class ModalAdd extends Component {
         )
     }
 }
+

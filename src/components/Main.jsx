@@ -17,6 +17,7 @@ const Main = () => (
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/concursos' component={ListaConcursos}/>
+            {/*<Route path='/:url' component={Concurso}/>*/}
         </Switch>
     </main>
 )

@@ -1,6 +1,9 @@
 #body{
     background-color: #ebeced !important;
 }
+#button{
+    color: black;
+}
 .job{
     position: relative;
     width: 100%;
@@ -14,9 +17,10 @@
 .job-container{
     margin-top: 2%;
 }
-#job-list{
-    height:85vh;
+#job-list {
+    height: 85vh;
     overflow-y: scroll;
+    margin-top: 20vh;
 }
 #job-filter{
     position: relative;
@@ -61,7 +65,10 @@ button.btn-circle {
     color: #FAF1FB;
 }
 .logo{
-    margin-top: -1px;
+    margin-top: 2px;
+}
+.bajar{
+    margin-top: 40vh;
 }
 .loginform{
     top: 160px;
@@ -109,6 +116,10 @@ button.btn-circle {
 }
 .panel-info>.panel-heading {
     background-image: linear-gradient(to bottom,#008A91 0,#008A91 100%) !important;
+}
+.bgimg {
+    background-image: url('/bg-image.jpg');
+    background-size: cover;
 }
 .panel-title{
     color: #000E0A;

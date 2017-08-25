@@ -22,7 +22,7 @@ class Header extends Component {
                         <NavLink to="/" id="navbar-brand" className="navbar-brand" activeClassName="selected">
                             <img
                                 className="logo"
-                                src="/images/logo1.png"
+                                src="/logo2.png"
                                 alt="logo"/>
                         </NavLink>
                     </div>

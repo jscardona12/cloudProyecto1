@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ModalAdd from './ModalAdd.jsx'
-
+import InfoConcurso from './InfoConcurso.jsx';
 const customStyles = {
     content: {
         top: '50%',
@@ -27,7 +27,28 @@ export default class ListaConcursos extends Component {
     constructor(props) {
         super(props);
 
+        this.state ={
+            concursos:[ {
+                descripcion: "Mejor video sobre futbol ganara guayos",
+                fechaInicio: "08/08/2017",
+                fechaFin: "10/08/2017",
+                imagen: "./Rostro.PNG",
+                nombre: "Adidas",
+                url: "concursoAdidas"
+            }]
+
+        };
+
         this.onSelect = this.onSelect.bind(this);
+    }
+
+    addConcurso(concurso){
+        console.log(concurso);
+        var con = this.state.concursos;
+        con.push(concurso)
+        this.setState({
+            concursos:con
+        })
     }
 
     onSelect(val) {
@@ -56,19 +77,30 @@ export default class ListaConcursos extends Component {
     }
 
     render() {
+        const concursos = [
+            {
+                descripcion: "Mejor video sobre futbol ganara guayos",
+                fechaInicio: "08/08/2017",
+                fechaFin: "10/08/2017",
+                imagen: "./Rostro.PNG",
+                nombre: "Adidas",
+                url: "concursoAdidas"
+            }
+        ];
 
         return (
             <div className="container job-container">
                 <div className="col-md-3">
                     <div id="job-filter">
-                        <ModalAdd/>
+                        <ModalAdd addConcurso={this.addConcurso.bind(this)}/>
                     </div>
 
                 </div>
                 <div className="col-md-9" id="job-list">
-                    {/*{filteredJobs.map((job, index) => {*/}
-                    {/*return <Job key={index} delete={true} job={job}/>*/}
-                {/*})}*/}
+                    {   console.log(concursos)}
+                    {   this.state.concursos.map((concurso, index) => {
+                        return <InfoConcurso key={index} concurso={concurso}/>
+                    })}
                 </div>
             </div>
 
