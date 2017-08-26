@@ -32,7 +32,7 @@ export default class ListaConcursos extends Component {
                 descripcion: "Mejor video sobre futbol ganara guayos",
                 fechaInicio: "08/08/2017",
                 fechaFin: "10/08/2017",
-                imagen: "./Rostro.PNG",
+                imagen: "Rostro.PNG",
                 nombre: "Adidas",
                 url: "concursoAdidas"
             }]
@@ -87,6 +87,7 @@ export default class ListaConcursos extends Component {
                 url: "concursoAdidas"
             }
         ];
+        console.log(this.props.user);
 
         return (
             <div className="container job-container">

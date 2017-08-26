@@ -68,7 +68,7 @@ button.btn-circle {
     margin-top: 2px;
 }
 .bajar{
-    margin-top: 40vh;
+    margin-top: 20vh;
 }
 .loginform{
     top: 160px;
@@ -118,7 +118,7 @@ button.btn-circle {
     background-image: linear-gradient(to bottom,#008A91 0,#008A91 100%) !important;
 }
 .bgimg {
-    background-image: url('/bg-image.jpg');
+    background-image: url('./bg-image.jpg');
     background-size: cover;
 }
 .panel-title{

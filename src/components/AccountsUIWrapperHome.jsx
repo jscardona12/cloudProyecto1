@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
-
+import * as firebase from 'firebase'
 const customStyles = {
     content: {
         top: '50%',
@@ -38,23 +38,29 @@ export default class AccountsUIWrapperHome extends Component {
     }
 
     registerUser() {
+        console.log("ENTRO");
+        var name = this.state.name;
         if (this.state.password === this.state.cpassword) {
-            // this.uploadFile();
-            // if(this.up) {
-            // Accounts.createUser({
-            //     username: this.state.email,
-            //     password: this.state.password,
-            //     profile: {
-            //         name: this.state.name,
-            //         lastname: this.state.lastname,
-            //         email: this.state.email,
-            //         CV: this.state.CVLink
-            //     }
-            // });
-            //     this.up = false;
-            // }
-            // var fileInput = document.getElementById('file-upload');
-            // Meteor.call('jobs.update',fileInput);
+                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function (snapshot) {
+                    snapshot.updateProfile({
+                        displayName: name
+                    }).then(function () {
+                        console.log("update done");
+                        console.log(snapshot.uid);
+
+                        // var roleObj = {uid: snapshot.uid, role: $scope.user.role};
+                        // $http.post("https://localhost:3000/users", roleObj).then(function () {
+                        //     console.log("ok");
+                        // }).catch(function () {
+                        //     console.log("err");
+                        // });
+                    }, function (error) {
+                        // An error happened.
+                    });
+                }).catch(function (err) {
+                    console.log(err);
+                });
+
             this.closeModal();
         }
         else {

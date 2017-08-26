@@ -13,13 +13,11 @@ import ListaConcursos from './ListaConcursos.jsx'
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
 const Main = () => (
-    <main>
-        <Switch>
+    <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/concursos' component={ListaConcursos}/>
             {/*<Route path='/:url' component={Concurso}/>*/}
-        </Switch>
-    </main>
+    </Switch>
 )
 
 export default Main
