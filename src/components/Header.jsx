@@ -52,7 +52,7 @@ export default class Header extends Component {
                         <NavLink to="/" id="navbar-brand" className="navbar-brand" activeClassName="selected">
                             <img
                                 className="logo"
-                                src="logo2.png"
+                                src="logo3.png"
                                 alt="logo"/>
                         </NavLink>
                     </div>

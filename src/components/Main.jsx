@@ -5,6 +5,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
 import ListaConcursos from './ListaConcursos.jsx'
+import ListaVideos from './ListaVideos.jsx'
 
 
 // The Main component renders one of the three provided
@@ -16,7 +17,7 @@ const Main = () => (
     <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/concursos' component={ListaConcursos}/>
-            {/*<Route path='/:url' component={Concurso}/>*/}
+            {<Route path='/:url' component={ListaVideos}/>}
     </Switch>
 )
 

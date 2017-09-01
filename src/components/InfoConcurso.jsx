@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import EditModalConcurso from "./EditModalConcurso.jsx";
 
 
 export default class InfoConcurso extends Component {
@@ -84,85 +85,70 @@ export default class InfoConcurso extends Component {
 
     }
 
-
-    // applyJob() {
-    //     var profile = Meteor.user().profile;
-    //     var profiles = this.props.job.profiles;
-    //     var bool = false;
-    //     profiles = profiles.filter(profilei => profilei.email === profile.email);
-    //     profiles.forEach(profilei => {
-    //         if (profile.email === profilei.email) {
-    //             bool = true;
-    //             this.setState({alert: this.warningAlert});
-    //         }
-    //     })
-    //     if (bool === false) {
-    //         Meteor.call('jobs.update', this.props.job._id, profile);
-    //         this.setState({alert: this.succesAlert});
-    //     }
-    //
-    //
-    // }
-
     getPath() {
-        // FlowRouter.go('/publishJobs/' + this.props.job._id + "/applicants");
+        return 'concursos/'+ this.props.concurso.url;
     }
 
 
     render() {
         return (
-            <div>
-                <div className="job row">
-                    <div className="col-md-3">
-                        <img id="jobImage" src={this.props.concurso.imagen} alt="image"/>
-                    </div>
-                    <div className="col-md-6">
-                        <h2>{this.props.concurso.nombre}</h2>
-                        <div>
+        <a href= {this.props.concurso.url}>
+            <button>
+                <div>
+                    <div className="job row">
+                        <div className="panel panel-info">
 
-                            <h3 style={{display: 'inline'}}>Fecha Inicio: </h3>
-                            <p style={{display: 'inline'}}>
-                                {this.props.concurso.fechaInicio}
-                            </p>
+                            <div className="panel-heading">
+                                <div className="row">
+                                    <div className="col-md-10">
+                                        <h3 className="panel-title">{this.props.concurso.nombre}</h3 >
+                                    </div>
+                                    <div className="col-md-2">
+                                        <button className="deleteAnimal">
+                                            &times;
+                                        </button>
+                                    </div>
+                                </div>
 
+
+                            </div>
+
+                            <div className="col-md-3">
+
+
+                                <img alt="User Pic"
+                                     src="Rostro.PNG"
+                                     className="img-circle img-responsive"/>
+                            </div>
+
+                            <div className="col-md-9">
+                                <table className="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>Fecha inicio:</td>
+                                        <td>{this.props.concurso.fechaInicio}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha fin:</td>
+                                        <td>{this.props.concurso.fechaFin}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Descripcion:</td>
+                                        <td>{this.props.concurso.descripcion}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Edit:</td>
+                                        <EditModalConcurso/>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div>
-
-                            <h3 style={{display: 'inline'}}>Fecha Fin: </h3>
-                            <p style={{display: 'inline'}}>
-                                {this.props.concurso.fechaFin}
-                            </p>
-
-                        </div>
-                        <div>
-                            <h3 style={{display: 'inline'}}>Descripcion: </h3>
-                            <p style={{display: 'inline'}}>
-                                {this.props.concurso.descripcion}
-                            </p>
-                        </div>
-
                     </div>
-                    <div> {this.state.alert}</div>
-                    <div className="container col-md-3">
-                        {this.props.delete ?
-                            (
-                                <div>
-                                    <button onClick={this.getPath.bind(this)} className="btn btn-md btn-primary">
-                                        Applicants
-                                </button>
-                                    <button className="btn btn-md btn-primary" onClick={() => this.deleteJob()}>
-                                        Delete Job
-                                    </button>
-                                </div>) :
-                            <button className="btn btn-md btn-primary" onClick={() => this.applyJob()}>
-                                Apply
-                            </button>
-                        }
-                    </div>
-
                 </div>
-            </div>
-
+            </button>
+        </a>
         )
     }
 
