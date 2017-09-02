@@ -80,6 +80,17 @@ button.btn-circle {
     border-radius: 10px;
     padding: 0px;
 }
+.sinput{
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
+    border-color: rgba(0, 0, 0, 0.7);
+    color: #e5e5e5;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin: 0px;
+}
 #sinput{
     background: rgb(0, 0, 0); /* fallback color */
     background: rgba(0, 0, 0, 0.7);

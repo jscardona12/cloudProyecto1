@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import ModalAdd from './ModalAdd.jsx'
 import InfoConcurso from './InfoConcurso.jsx';
+import * as firebase from 'firebase';
+import axios from 'axios';
 const customStyles = {
     content: {
         top: '50%',
@@ -21,23 +23,19 @@ const customStyles = {
         width: '30%'
     }
 };
-
+var concursos =[];
 export default class ListaConcursos extends Component {
 
     constructor(props) {
         super(props);
 
         this.state ={
-            concursos:[ {
-                descripcion: "Mejor video sobre futbol ganara guayos",
-                fechaInicio: "08/08/2017",
-                fechaFin: "10/08/2017",
-                imagen: "Rostro.PNG",
-                nombre: "Adidas",
-                url: "concursoAdidas"
-            }]
+            user:'',
+            concursos:[],
 
         };
+        console.log(this.props.user)
+        this.concs ={};
 
         this.onSelect = this.onSelect.bind(this);
     }
@@ -68,6 +66,19 @@ export default class ListaConcursos extends Component {
         // this.closeModal();
     }
 
+    getConcursos() {
+        axios.get("http://localhost:8000/project1/concurso", {headers: {token: this.props.user}})
+            .then(response => {
+                this.setState({
+                    concursos: response.data
+                })
+                console.log(this.state.concursos);
+                console.log('SUCCESS');
+                console.log(response);
+            }).catch(function () {
+            console.log("err");
+        })
+    }
     openModal() {
         this.setState({modalIsOpen: true});
     }
@@ -76,42 +87,37 @@ export default class ListaConcursos extends Component {
         this.setState({modalIsOpen: false});
     }
 
-    render() {
-        const concursos = [
-            {
-                descripcion: "Mejor video sobre futbol ganara guayos",
-                fechaInicio: "08/08/2017",
-                fechaFin: "10/08/2017",
-                imagen: "./Rostro.PNG",
-                nombre: "Adidas",
-                url: "concursoAdidas"
-            }
-        ];
-        console.log(this.props.user);
+    componentDidMount (){
+        var user = this.props.user;
+        console.log(user);
+        this.getConcursos();
 
-        return (
-            <div className="container job-container">
-                <div className="col-md-3">
-                    <div id="job-filter">
-                        <ModalAdd addConcurso={this.addConcurso.bind(this)}/>
-                    </div>
-
-                </div>
-                <div className="col-md-9" id="job-list">
-                    {   console.log(concursos)}
-                    {   this.state.concursos.map((concurso, index) => {
-                        return <InfoConcurso key={index} concurso={concurso}/>
-                    })}
-                </div>
-            </div>
-
-        )
     }
 
+    render() {
+
+            return (
+                <div className="container job-container">
+                    <div className="col-md-3">
+                        <div id="job-filter">
+                            <ModalAdd user={this.props.user}/>
+                        </div>
+
+                    </div>
+                    <div className="col-md-9" id="job-list">
+                        {console.log(this.state.concursos)}
+                        {this.state.concursos.map((concurso, index) => {
+                            return <InfoConcurso key={index} concurso={concurso.fields}/>
+                        })}
+                    </div>
+                </div>
+
+            )
+        }
 }
 
 ListaConcursos.propTypes = {
-    jobs: PropTypes.array,
+    user: PropTypes.string.isRequired,
     currentUser: PropTypes.object,
     onSelect: React.PropTypes.func
 };

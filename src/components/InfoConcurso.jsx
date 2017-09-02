@@ -91,6 +91,7 @@ export default class InfoConcurso extends Component {
 
 
     render() {
+        console.log(this.props.concurso)
         return (
         <a href= {this.props.concurso.url}>
             <button>
@@ -101,7 +102,7 @@ export default class InfoConcurso extends Component {
                             <div className="panel-heading">
                                 <div className="row">
                                     <div className="col-md-10">
-                                        <h3 className="panel-title">{this.props.concurso.nombre}</h3 >
+                                        <h3 className="panel-title">{this.props.concurso.nombreconcu}</h3 >
                                     </div>
                                     <div className="col-md-2">
                                         <button className="deleteAnimal">
@@ -126,15 +127,15 @@ export default class InfoConcurso extends Component {
                                     <tbody>
                                     <tr>
                                         <td>Fecha inicio:</td>
-                                        <td>{this.props.concurso.fechaInicio}</td>
+                                        <td>{this.props.concurso.feini}</td>
                                     </tr>
                                     <tr>
                                         <td>Fecha fin:</td>
-                                        <td>{this.props.concurso.fechaFin}</td>
+                                        <td>{this.props.concurso.fefin}</td>
                                     </tr>
                                     <tr>
                                         <td>Descripcion:</td>
-                                        <td>{this.props.concurso.descripcion}</td>
+                                        <td>{this.props.concurso.premio}</td>
                                     </tr>
                                     <tr>
                                         <td>Edit:</td>

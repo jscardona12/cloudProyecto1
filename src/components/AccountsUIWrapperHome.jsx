@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import axios from 'axios';
 const customStyles = {
     content: {
         top: '50%',
@@ -39,21 +40,28 @@ export default class AccountsUIWrapperHome extends Component {
 
     registerUser() {
         console.log("ENTRO");
-        var name = this.state.name;
+        var state = this.state
+
         if (this.state.password === this.state.cpassword) {
                 firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function (snapshot) {
                     snapshot.updateProfile({
-                        displayName: name
+                        displayName: state.name
                     }).then(function () {
                         console.log("update done");
                         console.log(snapshot.uid);
 
-                        // var roleObj = {uid: snapshot.uid, role: $scope.user.role};
-                        // $http.post("https://localhost:3000/users", roleObj).then(function () {
-                        //     console.log("ok");
-                        // }).catch(function () {
-                        //     console.log("err");
-                        // });
+                        var roleObj = {token: snapshot.uid,
+                            nombres: state.name,
+                            apellidos: state.lastname,
+                            email: state.email,
+                            contrasena:state.password
+                        };
+                        console.log(JSON.stringify(roleObj));
+                        axios.post("http://localhost:8000/project1/usuario", JSON.stringify(roleObj)).then(function () {
+                            console.log("ok");
+                        }).catch(function () {
+                            console.log("err");
+                        });
                     }, function (error) {
                         // An error happened.
                     });

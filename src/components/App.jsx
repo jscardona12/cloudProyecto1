@@ -3,6 +3,7 @@ import Header from './Header.jsx'
 import Main from './Main.jsx'
 // import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import * as firebase from 'firebase'
+import UidProvider from './UidProvider.js';
 
 const config = {
     apiKey: "AIzaSyAjajgN45i-QBA5L3oZoOe6caMv9wKGB2E",
@@ -13,47 +14,53 @@ const config = {
     messagingSenderId: "948114200644"
 };
 firebase.initializeApp(config);
+export const auth = firebase.auth(); //the firebase auth namespace
 
-class App extends Component {
-    constructor(props) {
-        super(props);
+export const storageKey = 'user';
 
-        this.state = {
-            user: firebase.auth().currentUser,
-        };
-    }
+export const isAuthenticated = () => {
+    return !!auth.currentUser || !!localStorage.getItem(storageKey);
+}
 
-    openProfileModal() {
-        return;
-    }
+ class App extends Component {
+     state = {
+         uid: null
+     }
 
-    componentDidMount(){
-        var setState= (user)=>
-        {
-            this.setState({
-                user: user,
+
+     static childContextTypes = {
+         uid: React.PropTypes.string
+     }
+     getChildContext() {
+         return {uid: this.state.uid};
+     }
+
+    componentDidMount() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    window.localStorage.setItem(storageKey, user.uid);
+                    this.setState({uid: user.uid});
+                } else {
+                    window.localStorage.removeItem(storageKey);
+                    this.setState({uid: null});
+                }
             });
-            console.log(this.state)
-        }
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                console.log(user);
-                setState(user);
-            } else {
-
-                console.log("chao");
-            }
-        });
     }
+
 
 
     render() {
+        console.log(this.state.uid)
         return (
-            <div >
-                <Header user={this.state.user}/>
-                <Main/>
-            </ div >
+            <UidProvider>
+                {(uid) => (
+                    <div >
+                        <Header user={uid} />
+                        <Main user={uid}/>
+                    </ div >
+                )}
+            </UidProvider>
+
         )
     };
 }

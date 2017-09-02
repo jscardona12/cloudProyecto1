@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 // import AccountsUIWrapperHome from './AccountsUIWrapperHome.jsx';
 import {NavLink, Route} from 'react-router-dom'
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import UidProvider from './UidProvider.js';
 
 
 export default class Header extends Component {
