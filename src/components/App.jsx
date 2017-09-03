@@ -32,7 +32,7 @@ export const isAuthenticated = () => {
          uid: React.PropTypes.string
      }
      getChildContext() {
-         return {uid: this.state.uid};
+         return this.state.uid?{uid: this.state.uid}:{uid: localStorage.getItem(storageKey)};
      }
 
     componentDidMount() {

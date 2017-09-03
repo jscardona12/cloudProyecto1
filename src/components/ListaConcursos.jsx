@@ -40,13 +40,14 @@ export default class ListaConcursos extends Component {
         this.onSelect = this.onSelect.bind(this);
     }
 
-    addConcurso(concurso){
-        console.log(concurso);
-        var con = this.state.concursos;
-        con.push(concurso)
-        this.setState({
-            concursos:con
-        })
+    editConcurso(formData){
+        console.log('ENTROOOOOOOOOOOOOOOOOOOO');
+        axios.put("http://localhost:8000/project1/concurso", formData).then(function () {
+            console.log("ok");
+        }).catch(function () {
+            console.log("err");
+        });
+        alert('Se a editado el concurso');
     }
 
     onSelect(val) {
@@ -57,17 +58,15 @@ export default class ListaConcursos extends Component {
         this.setState({filterPay: value});
     }
 
-    insertJob() {
-        // console.log("Insert A Job");
-        // Meteor.call('jobs.insert', this.state.name, this.state.description, this.state.city, this.state.country,
-        //     this.state.pay, this.state.currency);
-        // console.log(Jobs.find({owner: Meteor.userId()}).fetch())
-        // console.log("Insert Job");
-        // this.closeModal();
-    }
+
 
     getConcursos() {
-        axios.get("http://localhost:8000/project1/concurso", {headers: {token: this.props.user}})
+        axios.get("http://localhost:8000/project1/concurso",
+            {headers: {
+                token: this.props.user,
+                 url: 'hola',
+                 isurl:'false',
+            }})
             .then(response => {
                 this.setState({
                     concursos: response.data
@@ -107,7 +106,7 @@ export default class ListaConcursos extends Component {
                     <div className="col-md-9" id="job-list">
                         {console.log(this.state.concursos)}
                         {this.state.concursos.map((concurso, index) => {
-                            return <InfoConcurso key={index} concurso={concurso.fields}/>
+                            return <InfoConcurso edit={this.editConcurso.bind(this)}key={index} user={this.props.user} pk={concurso.pk} concurso={concurso.fields}/>
                         })}
                     </div>
                 </div>

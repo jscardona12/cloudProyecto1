@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditModalConcurso from "./EditModalConcurso.jsx";
 
-
+const ROOT_URL = "http://localhost:8000/media/";
 export default class InfoConcurso extends Component {
 
     constructor(props) {
@@ -86,15 +86,13 @@ export default class InfoConcurso extends Component {
     }
 
     getPath() {
-        return 'concursos/'+ this.props.concurso.url;
+        return 'concursos/'+ this.props.concurso.urlconcu;
     }
 
 
     render() {
         console.log(this.props.concurso)
         return (
-        <a href= {this.props.concurso.url}>
-            <button>
                 <div>
                     <div className="job row">
                         <div className="panel panel-info">
@@ -118,7 +116,7 @@ export default class InfoConcurso extends Component {
 
 
                                 <img alt="User Pic"
-                                     src="Rostro.PNG"
+                                     src={ROOT_URL + this.props.concurso.imagenconcu}
                                      className="img-circle img-responsive"/>
                             </div>
 
@@ -139,8 +137,15 @@ export default class InfoConcurso extends Component {
                                     </tr>
                                     <tr>
                                         <td>Edit:</td>
-                                        <EditModalConcurso/>
+                                        <EditModalConcurso edit={this.props.edit} pk={this.props.pk} concurso={this.props.concurso} user={this.props.user}/>
                                     </tr>
+                                    <tr>
+                                        <a href= {this.props.concurso.urlconcu}>
+                                            <button> Ver concurso </button>
+                                        </a>
+                                    </tr>
+
+
 
                                     </tbody>
                                 </table>
@@ -148,8 +153,6 @@ export default class InfoConcurso extends Component {
                         </div>
                     </div>
                 </div>
-            </button>
-        </a>
         )
     }
 

@@ -2,9 +2,10 @@
  * Created by Juan on 18/08/2017.
  */
 import React, {Component} from 'react';
+import axios from 'axios';
+import ModalAddVideo from './ModalAddVideo.jsx'
 import SweetAlert from 'react-bootstrap-sweetalert';
-import ModalAdd from './ModalAdd.jsx'
-import InfoConcurso from './InfoConcurso.jsx';
+import InfoVideo  from './InfoVideo.jsx';
 const customStyles = {
     content: {
         top: '50%',
@@ -27,21 +28,23 @@ export default class ListaVideos extends Component {
         super(props);
 
         this.state = {
-            concursos: [{
-                descripcion: "Mejor video sobre futbol ganara guayos",
-                fechaInicio: "08/08/2017",
-                fechaFin: "10/08/2017",
-                imagen: "Rostro.PNG",
-                nombre: "Adidas",
-                url: "concursoAdidas"
-            }]
+            concurso: {fields:{nombreconcu:'Este concurso no existe'}},
+            alert: false,
+            videos:[]
 
         };
+        this.succesAlert = (
+            <SweetAlert success
+                        title="You apply succesfully"
+                        onConfirm={() => this.setState({alert: null})}>
+
+            </SweetAlert>
+        );
 
         this.onSelect = this.onSelect.bind(this);
     }
 
-    addConcurso(concurso) {
+    addVideo(concurso) {
         console.log(concurso);
         var con = this.state.concursos;
         con.push(concurso)
@@ -54,9 +57,6 @@ export default class ListaVideos extends Component {
         this.setState({country: val});
     }
 
-    onSliderChange(value) {
-        this.setState({filterPay: value});
-    }
 
     insertJob() {
         // console.log("Insert A Job");
@@ -74,38 +74,100 @@ export default class ListaVideos extends Component {
     closeModal() {
         this.setState({modalIsOpen: false});
     }
+    getConcurso(callback) {
+        axios.get("http://localhost:8000/project1/concurso",
+            {headers: {
+                token: 'no importa',
+                url: this.props.url,
+                isurl:'true',
+            }
+
+            })
+            .then(response => {
+                this.setState({
+                    concurso: response.data[0]
+                })
+                this.getVideos();
+                console.log(this.state.concurso);
+                console.log('SUCCESS');
+                console.log(response);
+            }).catch(function () {
+            console.log("err");
+        })
+    }
+    getVideos() {
+        axios.get("http://localhost:8000/project1/video",
+            {headers: {
+                token: parseInt(this.state.concurso.pk),
+            }})
+            .then(response => {
+                this.setState({
+                    videos: response.data
+                })
+                console.log(this.state.videos);
+                console.log('SUCCESS');
+                console.log(response);
+            }).catch(function (error) {
+            console.log(error);
+        })
+    }
+    componentDidMount(){
+
+        this.getConcurso();
+
+    }
+
 
     render() {
-        const concursos = [
-            {
-                descripcion: "Mejor video sobre futbol ganara guayos",
-                fechaInicio: "08/08/2017",
-                fechaFin: "10/08/2017",
-                imagen: "./Rostro.PNG",
-                nombre: "Adidas",
-                url: "concursoAdidas"
-            }
-        ];
+        const hideAlert=()=>{
+            this.setState({
+                alert: null
+            });
+        }
+        const constsuccesA =()=> {
+            this.setState({
+                alert: getSuccessAlert
+            });
 
+        }
 
+        const getSuccessAlert = (
+            <SweetAlert
+                success
+                title='Video Enviado'
+                text ='Hemos recibido tu video y lo estamos procesado para que sea publicado. Tan pronto el video quede publicado en la página del concurso te notificaremos por email.'
+                onConfirm={hideAlert}>
+            </SweetAlert>
+
+        );
         return (
-            <div className="container">
-                <div className="col-md-3"></div>
-                <div className="col-md-6">
-                    <div className="row"><h1></h1></div>
-                    <div className="row"><h1></h1></div>
-                    <h1> CONCURSO ADIDAS</h1>
-
-                    <video width="400" controls>
-                        <source src="http://localhost:3000/cat.mp4" type="video/mp4"/>
-                        Your browser does not support HTML5 video.
-                    </video>
+            <div className="container job-container">
+                <div className="row">
+                    <div className="col-md-3">
+                       <div id="job-filter">
+                          <ModalAddVideo pk={this.state.concurso.pk}/>
+                        </div>
+                    </div>
+                    <div className="col-md-9 text">
+                        <div id="job-filter">
+                            <h1>{this.state.concurso.fields.nombreconcu}</h1>
+                            {this.state.alert}
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-        )
+                <div className="row">
+                    <div className="col-md-3"></div>
+                     <div className="col-md-8" id="job-list">
+                         {console.log(this.state.videos)}
+                         {this.state.videos.map((video, index) => {
+                             return <InfoVideo key={index} video={video.fields}/>
+                         })}
+                </div>
+                </div>
+            </div>)
     }
 
 }
+
 
 

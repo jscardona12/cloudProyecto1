@@ -33,7 +33,11 @@ class Main extends Component {
                         <Route exact path='/' component={Home}/>
                         <Route path='/concursos' render={(props) => (
                             <ListaConcursos user={uid}/> )}/>
-                        <Route path='/:url' component={ListaVideos}/>
+                        <Route path='/:url' render={({match}) => (
+                            <ListaVideos
+                                user={uid} url={match.params.url}
+                            />
+                        )}/>
                     </Switch>)
                 }
             </UidProvider>)
