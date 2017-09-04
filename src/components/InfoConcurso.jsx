@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import EditModalConcurso from "./EditModalConcurso.jsx";
+import axios from 'axios'
 
 const ROOT_URL = "http://localhost:8000/media/";
 export default class InfoConcurso extends Component {
@@ -85,6 +86,24 @@ export default class InfoConcurso extends Component {
 
     }
 
+    deleteConcurso(){
+        axios.delete("http://localhost:8000/project1/concurso",
+            {headers: {
+                token: this.props.user,
+                pk: this.props.pk,
+            }})
+            .then(response => {
+                this.setState({
+                    concursos: response.data
+                })
+                console.log(this.state.concursos);
+                console.log('SUCCESS');
+                console.log(response);
+            }).catch(function () {
+            console.log("err");
+        })
+    }
+
     getPath() {
         return 'concursos/'+ this.props.concurso.urlconcu;
     }
@@ -103,7 +122,7 @@ export default class InfoConcurso extends Component {
                                         <h3 className="panel-title">{this.props.concurso.nombreconcu}</h3 >
                                     </div>
                                     <div className="col-md-2">
-                                        <button className="deleteAnimal">
+                                        <button onClick={this.deleteConcurso.bind(this)} className="deleteAnimal">
                                             &times;
                                         </button>
                                     </div>
